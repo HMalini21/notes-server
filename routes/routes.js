@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Model = require('../models/notes');
 const {
   getAllNotes,
   getNotesById,
@@ -8,9 +7,11 @@ const {
   deleteById,
   postNotes,
 } = require('../controller/notes.controller');
+const notesSchema = require('../validation/notes.schema');
+const { validate } = require('../middlewares/validate.middleware');
 
 //post Method
-router.post('/post', postNotes);
+router.post('/post', validate(notesSchema), postNotes);
 
 //get all method
 router.get('/getAll', getAllNotes);

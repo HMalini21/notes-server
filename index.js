@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const noteRouter = require('./routes/routes');
+const { errorHandler } = require('./middlewares/errorHandler.middleware');
+const { notfound } = require('./middlewares/notFound.middleware');
 
 const mongoString = process.env.DATABASE_URL;
 
@@ -21,6 +23,12 @@ database.on('error', (erorr) => {
 database.once('connected', () => {
   console.log('Database connected');
 });
+
+// 404 handler
+app.use(notfound);
+
+// error handler middleware
+app.use(errorHandler);
 
 app.listen(1995, () => {
   console.log(`http://localhost:${1995}`);
