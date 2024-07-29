@@ -1,60 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const Model = require('../models/notes');
+const {
+  getAllNotes,
+  getNotesById,
+  patchById,
+  deleteById,
+  postNotes,
+} = require('../controller/notes.controller');
 
 //post Method
-router.post('/post', async (req, res) => {
-  const data = new Model({
-    text: req.body.text,
-    date: req.body.date,
-  });
-  try {
-    const dataToSave = await data.save();
-    res.status(200).json(dataToSave);
-  } catch (error) {
-    res.status(400).json(error.message);
-  }
-});
+router.post('/post', postNotes);
 
 //get all method
-router.get('/getAll', async (req, res) => {
-  try {
-    const data = await Model.find();
-    res.json(data);
-  } catch (e) {
-    res.status(400).json(e.message);
-  }
-});
+router.get('/getAll', getAllNotes);
 
 //get by Id method
-router.get('/get/:id', async (req, res) => {
-  try {
-    const data = await Model.findById(req.params.id);
-    res.status(200).json(data);
-  } catch (e) {
-    res.status(500).json(e.message);
-  }
-});
+router.get('/get/:id', getNotesById);
 
 //update method
-router.patch('/update/:id', async (req, res) => {
-  try {
-    const data = await Model.findByIdAndUpdate(req.params.id, req.body);
-    res.json(data);
-    console.log('updated');
-  } catch (e) {
-    res.status(500).json(e.message);
-  }
-});
+router.patch('/update/:id', patchById);
 
 //delete method
-router.delete('/delete/:id', async (req, res) => {
-  try {
-    const data = await Model.findByIdAndDelete(req.params.id);
-    res.json(data);
-  } catch (e) {
-    res.status(500).json(e.message);
-  }
-});
+router.delete('/delete/:id', deleteById);
 
 module.exports = router;
