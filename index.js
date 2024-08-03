@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const cors = require('cors');
 const noteRouter = require('./routes/routes');
 const { errorHandler } = require('./middlewares/errorHandler.middleware');
 const { notfound } = require('./middlewares/notFound.middleware');
@@ -13,6 +14,7 @@ const database = mongoose.connection;
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/notes', noteRouter);
 

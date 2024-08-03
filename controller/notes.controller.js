@@ -7,7 +7,14 @@ const postNotes = async (req, res) => {
   });
   try {
     const dataToSave = await data.save();
-    res.status(200).json(dataToSave);
+    if (dataToSave == null) {
+      res.json({ message: 'enter a data to save', data: 'no data' });
+    } else {
+      res.json({
+        message: 'data saved',
+        data: dataToSave,
+      });
+    }
   } catch (error) {
     res.status(400).json(error.message);
   }
@@ -33,9 +40,20 @@ const getNotesById = async (req, res) => {
 
 const patchById = async (req, res) => {
   try {
+    // if (!req.params.id) {
+    //   res.json({
+    //     message: 'id not found',
+    //   });
+    // }
     const data = await Model.findByIdAndUpdate(req.params.id, req.body);
-    res.json(data);
-    console.log('updated');
+    if (data == null) {
+      res.json({ message: 'nothing updated', data: 'no data' });
+    } else {
+      res.json({
+        message: 'updated successfully',
+        data: data,
+      });
+    }
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

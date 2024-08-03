@@ -7,7 +7,7 @@ const {
   deleteById,
   postNotes,
 } = require('../controller/notes.controller');
-const notesSchema = require('../validation/notes.schema');
+const { notesSchema, notesUpdateSchema } = require('../validation/notes.schema');
 const { validate } = require('../middlewares/validate.middleware');
 
 //post Method
@@ -20,7 +20,7 @@ router.get('/getAll', getAllNotes);
 router.get('/get/:id', getNotesById);
 
 //update method
-router.patch('/update/:id', patchById);
+router.patch('/update/:id', validate(notesUpdateSchema), patchById);
 
 //delete method
 router.delete('/delete/:id', deleteById);

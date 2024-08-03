@@ -4,4 +4,8 @@ const notesSchema = Joi.object({
   text: Joi.string().required(),
 });
 
-module.exports = notesSchema;
+const notesUpdateSchema = Joi.object({
+  text: Joi.string().optional(),
+});
+
+module.exports = { notesSchema, notesUpdateSchema };
