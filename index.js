@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
 const noteRouter = require('./routes/routes');
+const userRouter = require('./routes/userRoutes');
 const { errorHandler } = require('./middlewares/errorHandler.middleware');
 const { notfound } = require('./middlewares/notFound.middleware');
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/notes', noteRouter);
+app.use('/user', userRouter);
 
 database.on('error', (erorr) => {
   console.log(erorr);
